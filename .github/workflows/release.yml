@@ -6,7 +6,7 @@ on:
       - 'v*'  # Déclenché sur les tags de version (ex: v1.0.0, v2.1.0)
 
 env:
-  APP_NAME: "Organisateur-Photos"
+  APP_NAME: "PhotoTransfer"
 
 jobs:
   build-windows:
