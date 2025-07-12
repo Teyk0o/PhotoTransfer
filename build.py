@@ -23,7 +23,7 @@ def build_executable():
     
     # Configuration PyInstaller
     main_script = "photo_organizer.py"
-    app_name = "Organisateur-Photos"
+    app_name = "PhotoTransfer"
     
     # Options PyInstaller
     pyinstaller_args = [

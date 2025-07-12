@@ -26,7 +26,7 @@ A simple and modern application to automatically sort your photos by date. Speci
 
 ### Option 1: Windows Executable (Recommended)
 1. Download the latest version from [Releases](../../releases)
-2. Double-click on `Organisateur-Photos.exe`
+2. Double-click on `PhotoTransfer.exe`
 3. That's it! 🎉
 
 ### Option 2: From source code

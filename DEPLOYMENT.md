@@ -120,7 +120,7 @@ on:
 ### Variables d'Environment
 ```yaml
 env:
-  APP_NAME: "Organisateur-Photos"  # Nom de l'exécutable
+  APP_NAME: "PhotoTransfer"  # Nom de l'exécutable
 ```
 
 ### Customisation

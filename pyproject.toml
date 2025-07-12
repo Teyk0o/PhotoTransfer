@@ -82,7 +82,7 @@ extend-exclude = '''
 
 # Configuration PyInstaller via Python
 [tool.pyinstaller]
-name = "Organisateur-Photos"
+name = "PhotoTransfer"
 onefile = true
 windowed = true
 clean = true
