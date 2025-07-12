@@ -1,103 +1,103 @@
-# 🚀 Guide de Déploiement
+# 🚀 Deployment Guide
 
-Guide pour déployer et créer des releases de l'Organisateur de Photos.
+Guide for deploying and creating releases of Photo Organizer.
 
-## 📋 Prérequis
+## 📋 Prerequisites
 
-- Accès en écriture au repository GitHub
-- Python 3.8+ installé localement
-- Git configuré avec vos identifiants
+- Write access to the GitHub repository
+- Python 3.8+ installed locally
+- Git configured with your credentials
 
-## 🔄 Workflow de Release
+## 🔄 Release Workflow
 
-### 1. Préparation de la Release
+### 1. Release Preparation
 
-#### a) Mise à jour de la Version
-Modifiez la version dans `pyproject.toml`:
+#### a) Version Update
+Update the version in `pyproject.toml`:
 ```toml
 [project]
-version = "2.1.0"  # ← Mettre à jour ici
+version = "2.1.0"  # ← Update here
 ```
 
-#### b) Test Local Complet
+#### b) Complete Local Testing
 ```bash
-# Installer les dépendances
+# Install dependencies
 pip install -r requirements.txt
 
-# Test de l'application
+# Test the application
 python photo_organizer_v2.py
 
-# Test du build local
+# Test local build
 python build.py
 ```
 
-#### c) Mise à jour du Changelog
-Mettez à jour `README.md` section changelog:
+#### c) Changelog Update
+Update `README.md` changelog section:
 ```markdown
 ### v2.1.0
-- ✨ Nouvelle fonctionnalité X
-- 🐛 Correction du bug Y
-- 🎨 Amélioration de l'interface Z
+- ✨ New feature X
+- 🐛 Fix bug Y
+- 🎨 UI improvement Z
 ```
 
-### 2. Création de la Release
+### 2. Release Creation
 
-#### a) Commit et Push des Changements
+#### a) Commit and Push Changes
 ```bash
 git add .
-git commit -m "🚀 Préparer release v2.1.0"
+git commit -m "chore: prepare release v2.1.0"
 git push origin main
 ```
 
-#### b) Créer et Pousser le Tag
+#### b) Create and Push Tag
 ```bash
-# Créer le tag localement
+# Create tag locally
 git tag -a v2.1.0 -m "Release version 2.1.0"
 
-# Pousser le tag (déclenche GitHub Actions)
+# Push tag (triggers GitHub Actions)
 git push origin v2.1.0
 ```
 
-#### c) GitHub Actions s'Exécute Automatiquement
+#### c) GitHub Actions Runs Automatically
 1. ✅ Build Windows executable
 2. ✅ Generate changelog
 3. ✅ Create GitHub release
 4. ✅ Upload executable as asset
 
-### 3. Vérification de la Release
+### 3. Release Verification
 
-#### Vérifier que tout fonctionne:
-1. 🔗 [Aller sur GitHub Releases](../../releases)
-2. ✅ Vérifier que la release est créée
-3. 📦 Télécharger et tester l'exécutable
-4. 📝 Vérifier le changelog automatique
+#### Verify everything works:
+1. 🔗 [Go to GitHub Releases](../../releases)
+2. ✅ Verify release is created
+3. 📦 Download and test executable
+4. 📝 Verify automatic changelog
 
-## 🛠️ Build Local (Optionnel)
+## 🛠️ Local Build (Optional)
 
-### Script de Build Automatique
+### Automatic Build Script
 ```bash
 python build.py
 ```
 
-### Build Manuel avec PyInstaller
+### Manual Build with PyInstaller
 ```bash
 # Installation
 pip install pyinstaller
 
-# Build basique
+# Basic build
 pyinstaller --onefile --windowed photo_organizer_v2.py
 
-# Build optimisé
+# Optimized build
 pyinstaller \
   --onefile \
   --windowed \
-  --name="Organisateur-Photos" \
+  --name="Photo-Organizer" \
   --clean \
   --optimize=2 \
   photo_organizer_v2.py
 ```
 
-## 📊 GitHub Actions (Détail)
+## 📊 GitHub Actions (Details)
 
 ### Workflow Trigger
 ```yaml
@@ -107,104 +107,104 @@ on:
       - 'v*'  # v1.0.0, v2.1.0, etc.
 ```
 
-### Jobs Exécutés
-1. **build-windows**: Compile l'exécutable Windows
-2. **create-release**: Crée la release GitHub avec assets
-3. **notify-failure**: Notifie en cas d'échec (optionnel)
+### Executed Jobs
+1. **build-windows**: Compiles Windows executable
+2. **create-release**: Creates GitHub release with assets
+3. **notify-failure**: Notifies on failure (optional)
 
-### Secrets Requis
-- `GITHUB_TOKEN` (automatique, pas de configuration nécessaire)
+### Required Secrets
+- `GITHUB_TOKEN` (automatic, no configuration needed)
 
-## 🔧 Configuration GitHub Actions
+## 🔧 GitHub Actions Configuration
 
-### Variables d'Environment
+### Environment Variables
 ```yaml
 env:
-  APP_NAME: "PhotoTransfer"  # Nom de l'exécutable
+  APP_NAME: "PhotoTransfer"  # Executable name
 ```
 
-### Customisation
-Pour modifier le workflow, éditez `.github/workflows/release.yml`:
+### Customization
+To modify the workflow, edit `.github/workflows/release.yml`:
 
 ```yaml
-# Changer la version Python
+# Change Python version
 python-version: '3.11'
 
-# Ajouter des plateformes
+# Add platforms
 strategy:
   matrix:
     os: [windows-latest, ubuntu-latest, macos-latest]
 ```
 
-## 🐛 Dépannage
+## 🐛 Troubleshooting
 
-### Build Échoue
+### Build Fails
 ```bash
-# Vérifier les dépendances localement
+# Check dependencies locally
 pip install -r requirements.txt
 python -c "import tkinter; import PIL; import piexif"
 
-# Tester le build local
+# Test local build
 python build.py
 ```
 
-### GitHub Actions Échoue
-1. 📋 Vérifier les logs dans l'onglet "Actions"
-2. 🔍 Regarder la section qui a échoué
-3. 🛠️ Corriger et re-pousser un nouveau tag
+### GitHub Actions Fails
+1. 📋 Check logs in "Actions" tab
+2. 🔍 Look at the failed section
+3. 🛠️ Fix and re-push a new tag
 
-### Tag Déjà Existant
+### Tag Already Exists
 ```bash
-# Supprimer tag local
+# Delete local tag
 git tag -d v2.1.0
 
-# Supprimer tag distant
+# Delete remote tag
 git push origin --delete v2.1.0
 
-# Recréer avec corrections
+# Recreate with fixes
 git tag -a v2.1.0 -m "Release version 2.1.0"
 git push origin v2.1.0
 ```
 
-## 📝 Conventions de Versioning
+## 📝 Versioning Conventions
 
 ### Semantic Versioning (SemVer)
-- `v2.0.0` - Version majeure (changements incompatibles)
-- `v2.1.0` - Version mineure (nouvelles fonctionnalités)
-- `v2.1.1` - Patch (corrections de bugs)
+- `v2.0.0` - Major version (breaking changes)
+- `v2.1.0` - Minor version (new features)
+- `v2.1.1` - Patch (bug fixes)
 
-### Types de Tags
-- `v2.1.0` - Release stable
+### Tag Types
+- `v2.1.0` - Stable release
 - `v2.1.0-beta.1` - Pre-release/beta
-- `v2.1.0-alpha.1` - Version alpha
+- `v2.1.0-alpha.1` - Alpha version
 
-## 🎯 Checklist de Release
+## 🎯 Release Checklist
 
-### Avant Release
-- [ ] ✅ Tests locaux passent
-- [ ] 📝 Version mise à jour dans `pyproject.toml`
-- [ ] 📚 Documentation à jour
-- [ ] 🔄 Changelog mis à jour
-- [ ] 🧪 Build local testé
+### Before Release
+- [ ] ✅ Local tests pass
+- [ ] 📝 Version updated in `pyproject.toml`
+- [ ] 📚 Documentation up to date
+- [ ] 🔄 Changelog updated
+- [ ] 🧪 Local build tested
 
-### Après Release
-- [ ] ✅ Release GitHub créée
-- [ ] 📦 Exécutable téléchargeable
-- [ ] 🎯 Executable testé sur machine propre
-- [ ] 📢 Annonce (si nécessaire)
+### After Release
+- [ ] ✅ GitHub release created
+- [ ] 📦 Executable downloadable
+- [ ] 🎯 Executable tested on clean machine
+- [ ] 📢 Announcement (if necessary)
 
-## 🚨 Rollback (Retour en Arrière)
+## 🚨 Rollback
 
-### Supprimer une Release Défectueuse
-1. 🗑️ Supprimer la release sur GitHub
-2. 🏷️ Supprimer le tag:
+### Delete Defective Release
+1. 🗑️ Delete release on GitHub
+2. 🏷️ Delete tag:
 ```bash
 git push origin --delete v2.1.0
 git tag -d v2.1.0
 ```
-3. 🔧 Corriger les problèmes
-4. 🚀 Recréer la release avec le même tag
+3. 🔧 Fix issues
+4. 🚀 Recreate release with same tag
 
 ---
 
-🎉 **Votre application est maintenant prête pour un déploiement automatisé !**
+🎉 **Your application is now ready for automated deployment!**

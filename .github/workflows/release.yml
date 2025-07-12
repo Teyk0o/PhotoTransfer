@@ -3,7 +3,7 @@ name: 📦 Build and Release
 on:
   push:
     tags:
-      - 'v*'  # Déclenché sur les tags de version (ex: v1.0.0, v2.1.0)
+      - 'v*'  # Triggered on version tags (e.g. v1.0.0, v2.1.0)
 
 env:
   APP_NAME: "PhotoTransfer"
@@ -60,7 +60,7 @@ jobs:
     - name: 📥 Checkout Code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Récupérer tout l'historique pour le changelog
+        fetch-depth: 0  # Fetch full history for changelog
     
     - name: 📥 Download Windows Executable
       uses: actions/download-artifact@v3
@@ -71,41 +71,41 @@ jobs:
     - name: 📋 Generate Changelog
       id: changelog
       run: |
-        # Extraire le nom de la version depuis le tag
+        # Extract version name from tag
         VERSION=${GITHUB_REF#refs/tags/}
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         
-        # Générer un changelog basique
+        # Generate basic changelog
         echo "## 🎉 Version $VERSION" > CHANGELOG.md
         echo "" >> CHANGELOG.md
-        echo "### 📥 Téléchargements" >> CHANGELOG.md
-        echo "- **Windows**: \`${{ env.APP_NAME }}.exe\` (Prêt à utiliser)" >> CHANGELOG.md
+        echo "### 📥 Downloads" >> CHANGELOG.md
+        echo "- **Windows**: \`${{ env.APP_NAME }}.exe\` (Ready to use)" >> CHANGELOG.md
         echo "" >> CHANGELOG.md
         echo "### 🔧 Installation" >> CHANGELOG.md
-        echo "1. Téléchargez le fichier \`.exe\`" >> CHANGELOG.md
-        echo "2. Double-cliquez pour lancer l'application" >> CHANGELOG.md
-        echo "3. Aucune installation requise ! 🎉" >> CHANGELOG.md
+        echo "1. Download the \`.exe\` file" >> CHANGELOG.md
+        echo "2. Double-click to launch the application" >> CHANGELOG.md
+        echo "3. No installation required! 🎉" >> CHANGELOG.md
         echo "" >> CHANGELOG.md
-        echo "### 📝 Changements" >> CHANGELOG.md
+        echo "### 📝 Changes" >> CHANGELOG.md
         
-        # Récupérer les commits depuis le dernier tag
+        # Get commits since last tag
         PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
         if [ -n "$PREV_TAG" ]; then
-          echo "Changements depuis $PREV_TAG:" >> CHANGELOG.md
+          echo "Changes since $PREV_TAG:" >> CHANGELOG.md
           git log --oneline --no-merges $PREV_TAG..HEAD | sed 's/^/- /' >> CHANGELOG.md
         else
-          echo "- Version initiale" >> CHANGELOG.md
+          echo "- Initial version" >> CHANGELOG.md
         fi
         
         echo "" >> CHANGELOG.md
         echo "---" >> CHANGELOG.md
-        echo "💡 **Première fois ?** Consultez le [guide d'utilisation](../README.md) !" >> CHANGELOG.md
+        echo "💡 **First time?** Check out the [user guide](../README.md)!" >> CHANGELOG.md
     
     - name: 🚀 Create Release
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.changelog.outputs.version }}
-        name: "📸 Organisateur de Photos ${{ steps.changelog.outputs.version }}"
+        name: "📸 Photo Organizer ${{ steps.changelog.outputs.version }}"
         bodyFile: CHANGELOG.md
         artifacts: "release/${{ env.APP_NAME }}.exe"
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -117,15 +117,15 @@ jobs:
         
     - name: 🎉 Release Summary
       run: |
-        echo "## 🎉 Release créée avec succès !" >> $GITHUB_STEP_SUMMARY
+        echo "## 🎉 Release created successfully!" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Version**: ${{ steps.changelog.outputs.version }}" >> $GITHUB_STEP_SUMMARY
-        echo "**Plateforme**: Windows (x64)" >> $GITHUB_STEP_SUMMARY
+        echo "**Platform**: Windows (x64)" >> $GITHUB_STEP_SUMMARY
         echo "**Fichier**: ${{ env.APP_NAME }}.exe" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "🔗 [Voir la release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.changelog.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 [View release](https://github.com/${{ github.repository }}/releases/tag/${{ steps.changelog.outputs.version }})" >> $GITHUB_STEP_SUMMARY
 
-  # Job optionnel pour notifier en cas d'erreur
+  # Optional job to notify on error
   notify-failure:
     name: 📢 Notify Failure
     needs: [build-windows, create-release]
@@ -137,5 +137,5 @@ jobs:
       run: |
         echo "## ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "La génération de la release a échoué." >> $GITHUB_STEP_SUMMARY
-        echo "Vérifiez les logs des jobs précédents pour identifier le problème." >> $GITHUB_STEP_SUMMARY
+        echo "Release generation failed." >> $GITHUB_STEP_SUMMARY
+        echo "Check logs from previous jobs to identify the issue." >> $GITHUB_STEP_SUMMARY

@@ -12,6 +12,8 @@
 
 A simple and modern application to automatically sort your photos by date. Specially designed for non-technical users.
 
+[🇫🇷 French version](README_FR.md)
+
 ## ✨ Features
 
 - 📁 **Automatic sorting** by year and month (e.g., `2023/August`, `2024/January`)

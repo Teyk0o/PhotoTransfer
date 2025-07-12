@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script pour générer des images de test avec des dates EXIF aléatoires
+Script to generate test images with random EXIF dates
 """
 
 import os
@@ -11,17 +11,17 @@ from PIL.ExifTags import TAGS
 import piexif
 
 def generate_random_date():
-    """Génère une date aléatoire entre 2020 et 2024"""
+    """Generate a random date between 2020 and 2024"""
     start_date = datetime(2020, 1, 1)
     end_date = datetime(2024, 12, 31)
     
-    # Générer une date aléatoire
+    # Generate a random date
     time_between = end_date - start_date
     days_between = time_between.days
     random_days = random.randrange(days_between)
     random_date = start_date + timedelta(days=random_days)
     
-    # Ajouter une heure aléatoire
+    # Add a random time
     random_hour = random.randint(0, 23)
     random_minute = random.randint(0, 59)
     random_second = random.randint(0, 59)
@@ -29,21 +29,21 @@ def generate_random_date():
     return random_date.replace(hour=random_hour, minute=random_minute, second=random_second)
 
 def create_test_image(filename, date, size=(800, 600)):
-    """Crée une image de test avec une date EXIF spécifique"""
+    """Create a test image with a specific EXIF date"""
     
-    # Créer une image colorée simple
+    # Create a simple colored image
     colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'pink', 'cyan']
     color = random.choice(colors)
     
-    # Créer l'image
+    # Create the image
     img = Image.new('RGB', size, color=color)
     draw = ImageDraw.Draw(img)
     
-    # Ajouter du texte avec la date
+    # Add text with the date
     text = f"Image de test\n{date.strftime('%d/%m/%Y %H:%M')}"
     draw.text((50, 50), text, fill='white')
     
-    # Créer les données EXIF
+    # Create EXIF data
     date_str = date.strftime("%Y:%m:%d %H:%M:%S")
     
     exif_dict = {
@@ -62,20 +62,20 @@ def create_test_image(filename, date, size=(800, 600)):
         "thumbnail": None
     }
     
-    # Convertir en bytes EXIF
+    # Convert to EXIF bytes
     exif_bytes = piexif.dump(exif_dict)
     
-    # Sauvegarder l'image avec les données EXIF
+    # Save image with EXIF data
     img.save(filename, "JPEG", exif=exif_bytes, quality=85)
-    print(f"Créé: {os.path.basename(filename)} - {date.strftime('%B %Y')}")
+    print(f"Created: {os.path.basename(filename)} - {date.strftime('%B %Y')}")
 
 def main():
-    # Dossier de destination
+    # Destination folder
     test_folder = "/mnt/d/PhotoTransfer/photos_test"
     
-    # Créer des sous-dossiers pour simuler une vraie structure
+    # Create subfolders to simulate a real structure
     subfolders = [
-        "",  # Racine
+        "",  # Root
         "Vacances",
         "Famille", 
         "Vacances/Ete_2023",
@@ -86,23 +86,23 @@ def main():
         full_path = os.path.join(test_folder, subfolder)
         os.makedirs(full_path, exist_ok=True)
     
-    # Générer 30 images avec des dates aléatoires
+    # Generate 30 images with random dates
     for i in range(1, 31):
-        # Choisir un sous-dossier aléatoirement
+        # Choose a subfolder randomly
         subfolder = random.choice(subfolders)
         
-        # Générer une date aléatoire
+        # Generate a random date
         random_date = generate_random_date()
         
-        # Nom de fichier
+        # Filename
         filename = f"IMG_{i:04d}.jpg"
         full_path = os.path.join(test_folder, subfolder, filename)
         
-        # Créer l'image
+        # Create the image
         create_test_image(full_path, random_date)
     
-    print(f"\n30 images de test créées dans {test_folder}")
-    print("Vous pouvez maintenant tester votre organisateur de photos !")
+    print(f"\n30 test images created in {test_folder}")
+    print("You can now test your photo organizer!")
 
 if __name__ == "__main__":
     main()

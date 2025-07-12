@@ -1,119 +1,119 @@
-# 🤝 Guide de Contribution
+# 🤝 Contributing Guide
 
-Merci de votre intérêt pour améliorer l'Organisateur de Photos ! Ce guide vous explique comment contribuer efficacement.
+Thank you for your interest in improving Photo Organizer! This guide explains how to contribute effectively.
 
-## 🚀 Démarrage Rapide
+## 🚀 Quick Start
 
-### 1. Fork et Clone
+### 1. Fork and Clone
 ```bash
-# Fork le repository sur GitHub, puis:
-git clone https://github.com/VOTRE_USERNAME/PhotoTransfer.git
+# Fork the repository on GitHub, then:
+git clone https://github.com/YOUR_USERNAME/PhotoTransfer.git
 cd PhotoTransfer
 ```
 
-### 2. Environment de Développement
+### 2. Development Environment
 ```bash
-# Créer un environnement virtuel
+# Create a virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# ou
+# or
 venv\Scripts\activate     # Windows
 
-# Installer les dépendances
+# Install dependencies
 pip install -r requirements.txt
-pip install -e ".[dev]"  # Dépendances de développement
+pip install -e ".[dev]"  # Development dependencies
 ```
 
-### 3. Tester l'Installation
+### 3. Test Installation
 ```bash
 python photo_organizer_v2.py
 ```
 
-## 🐛 Signaler des Bugs
+## 🐛 Reporting Bugs
 
-### Avant de Signaler
-- Vérifiez les [issues existantes](../../issues)
-- Testez avec la dernière version
-- Reproduisez le bug de manière cohérente
+### Before Reporting
+- Check [existing issues](../../issues)
+- Test with the latest version
+- Reproduce the bug consistently
 
-### Template de Bug Report
+### Bug Report Template
 ```markdown
-**Description du Bug**
-Description claire et concise du problème.
+**Bug Description**
+Clear and concise description of the problem.
 
-**Étapes pour Reproduire**
-1. Allez à '...'
-2. Cliquez sur '....'
-3. Faites défiler jusqu'à '....'
-4. Observez l'erreur
+**Steps to Reproduce**
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-**Comportement Attendu**
-Ce qui devrait se passer.
+**Expected Behavior**
+What should happen.
 
-**Captures d'Écran**
-Si applicable, ajoutez des captures d'écran.
+**Screenshots**
+If applicable, add screenshots.
 
 **Environment:**
- - OS: [ex: Windows 10]
- - Version Python: [ex: 3.11]
- - Version de l'app: [ex: 2.0.0]
+ - OS: [e.g. Windows 10]
+ - Python Version: [e.g. 3.11]
+ - App Version: [e.g. 2.0.0]
 ```
 
-## ✨ Proposer des Améliorations
+## ✨ Proposing Enhancements
 
-### Template de Feature Request
+### Feature Request Template
 ```markdown
-**Le Problème**
-Description claire du problème que cette fonctionnalité résoudrait.
+**The Problem**
+Clear description of the problem this feature would solve.
 
-**La Solution**
-Description claire de ce que vous aimeriez voir implémenté.
+**The Solution**
+Clear description of what you'd like to see implemented.
 
-**Alternatives Considérées**
-Autres solutions ou fonctionnalités que vous avez considérées.
+**Alternatives Considered**
+Other solutions or features you've considered.
 
-**Contexte Supplémentaire**
-Tout autre contexte ou captures d'écran sur la demande de fonctionnalité.
+**Additional Context**
+Any other context or screenshots about the feature request.
 ```
 
-## 🔧 Développement
+## 🔧 Development
 
-### Structure du Projet
+### Project Structure
 ```
 PhotoTransfer/
-├── photo_organizer_v2.py    # Application principale
-├── build.py                 # Script de build
-├── requirements.txt         # Dépendances
-├── pyproject.toml          # Configuration projet
+├── photo_organizer_v2.py    # Main application
+├── build.py                 # Build script
+├── requirements.txt         # Dependencies
+├── pyproject.toml          # Project configuration
 ├── README.md               # Documentation
 ├── .github/workflows/      # GitHub Actions
-└── tests/                  # Tests (à créer)
+└── tests/                  # Tests (to be created)
 ```
 
-### Standards de Code
+### Code Standards
 
-#### Style Python
-- Utilisez [Black](https://black.readthedocs.io/) pour le formatage
-- Respectez PEP 8
-- Ajoutez des docstrings pour les fonctions importantes
+#### Python Style
+- Use [Black](https://black.readthedocs.io/) for formatting
+- Follow PEP 8
+- Add docstrings for important functions
 
 ```bash
-# Formater le code
+# Format code
 black photo_organizer_v2.py
 
-# Vérifier le style
+# Check style
 flake8 photo_organizer_v2.py
 ```
 
-#### Conventions de Nommage
-- **Variables/Fonctions**: `snake_case`
+#### Naming Conventions
+- **Variables/Functions**: `snake_case`
 - **Classes**: `PascalCase`
-- **Constantes**: `UPPER_CASE`
-- **Fichiers**: `snake_case.py`
+- **Constants**: `UPPER_CASE`
+- **Files**: `snake_case.py`
 
 ### Tests
 
-#### Ajouter des Tests
+#### Adding Tests
 ```python
 # tests/test_organizer.py
 import unittest
@@ -121,125 +121,178 @@ from photo_organizer_v2 import PhotoOrganizer
 
 class TestPhotoOrganizer(unittest.TestCase):
     def test_get_year_month_path(self):
-        # Vos tests ici
+        # Your tests here
         pass
 ```
 
-#### Lancer les Tests
+#### Running Tests
 ```bash
 python -m pytest tests/
 ```
 
-## 📝 Commits et Pull Requests
+## 📝 Commits and Pull Requests
 
-### Messages de Commit
-Utilisez des messages clairs et descriptifs:
+### Branch Naming Conventions
+Use conventional branch naming:
 
 ```bash
-# Bon
-git commit -m "✨ Ajouter support pour format HEIC"
-git commit -m "🐛 Corriger duplication lors du tri"
-git commit -m "📚 Mettre à jour documentation installation"
+# Features
+git checkout -b feat/add-heic-support
+git checkout -b feat/user-authentication
 
-# Moins bon
-git commit -m "fix"
-git commit -m "update"
+# Bug fixes
+git checkout -b fix/duplicate-sorting-issue
+git checkout -b fix/memory-leak
+
+# Documentation
+git checkout -b docs/update-installation-guide
+
+# Refactoring
+git checkout -b refactor/optimize-file-processing
+
+# Chores
+git checkout -b chore/update-dependencies
 ```
 
-### Émojis de Commit (Optionnel)
-- ✨ `:sparkles:` - Nouvelle fonctionnalité
-- 🐛 `:bug:` - Correction de bug
-- 📚 `:books:` - Documentation
-- 🎨 `:art:` - Interface/Design
-- ⚡ `:zap:` - Performance
-- 🔧 `:wrench:` - Configuration
-- 🚀 `:rocket:` - Deployment
-- ✅ `:white_check_mark:` - Tests
+### Commit Message Conventions
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```bash
+# Good examples
+git commit -m "feat: add support for HEIC format"
+git commit -m "fix: resolve duplicate files during sorting"
+git commit -m "docs: update installation documentation"
+git commit -m "refactor: optimize image processing performance"
+git commit -m "test: add unit tests for file organizer"
+git commit -m "chore: update dependencies to latest versions"
+
+# With scope
+git commit -m "feat(ui): add dark mode toggle"
+git commit -m "fix(organizer): handle special characters in filenames"
+
+# Breaking changes
+git commit -m "feat!: change configuration file format"
+git commit -m "feat(api)!: remove deprecated sorting methods"
+
+# Bad examples
+git commit -m "fix"
+git commit -m "update"
+git commit -m "working version"
+```
+
+### Commit Types
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, etc.)
+- `refactor`: Code refactoring
+- `test`: Adding or updating tests
+- `chore`: Maintenance tasks
+- `perf`: Performance improvements
+- `ci`: CI/CD changes
+- `build`: Build system changes
 
 ### Pull Requests
 
-#### Checklist avant PR
-- [ ] Le code fonctionne localement
-- [ ] Tests ajoutés si nécessaire
-- [ ] Documentation mise à jour
-- [ ] Code formaté avec Black
-- [ ] Aucune régression introduite
+#### PR Title Convention
+Use conventional commit format for PR titles:
+```
+feat: add HEIC image format support
+fix: resolve duplicate file handling
+docs: update contribution guidelines
+```
 
-#### Template de PR
+#### Checklist before PR
+- [ ] Code works locally
+- [ ] Tests added if necessary
+- [ ] Documentation updated
+- [ ] Code formatted with Black
+- [ ] No regressions introduced
+- [ ] Branch follows naming convention
+- [ ] Commits follow conventional format
+
+#### PR Template
 ```markdown
-## 🎯 Objectif
-Description claire de ce que fait cette PR.
+## 🎯 Purpose
+Clear description of what this PR does.
 
-## 🔄 Changements
-- [ ] Nouvelle fonctionnalité X
-- [ ] Correction du bug Y
-- [ ] Amélioration de Z
+## 🔄 Changes
+- [ ] New feature X
+- [ ] Bug fix Y
+- [ ] Improvement Z
 
-## 🧪 Tests
-- [ ] Tests automatisés ajoutés
-- [ ] Testé manuellement sur Windows
-- [ ] Testé avec différents types de photos
+## 🧪 Testing
+- [ ] Automated tests added
+- [ ] Manually tested on Windows
+- [ ] Tested with different photo types
 
-## 📸 Captures d'Écran
-Si changements visuels, ajoutez des captures.
+## 📸 Screenshots
+If visual changes, add screenshots.
 
 ## ✅ Checklist
-- [ ] Code testé localement
-- [ ] Documentation mise à jour
-- [ ] Changements décrits clairement
+- [ ] Code tested locally
+- [ ] Documentation updated
+- [ ] Changes clearly described
+- [ ] Follows branch naming convention
+- [ ] Follows commit message convention
 ```
 
-## 🔄 Workflow de Développement
+## 🔄 Development Workflow
 
-### 1. Créer une Branche
+### 1. Create a Branch
 ```bash
-git checkout -b feature/nom-de-la-fonctionnalite
-# ou
-git checkout -b fix/description-du-bug
+# Feature branch
+git checkout -b feat/new-feature-name
+
+# Bug fix branch
+git checkout -b fix/bug-description
+
+# Documentation branch
+git checkout -b docs/documentation-update
 ```
 
-### 2. Développer
-- Faites vos modifications
-- Testez régulièrement
-- Committez fréquemment avec des messages clairs
+### 2. Develop
+- Make your changes
+- Test regularly
+- Commit frequently with clear conventional messages
 
-### 3. Soumettre
+### 3. Submit
 ```bash
-git push origin feature/nom-de-la-fonctionnalite
+git push origin feat/new-feature-name
 ```
-Puis créez une Pull Request via l'interface GitHub.
+Then create a Pull Request via GitHub interface.
 
-## 🏗️ Build et Release
+## 🏗️ Build and Release
 
-### Build Local
+### Local Build
 ```bash
 python build.py
 ```
 
-### Créer une Release
-Les releases sont automatiques via GitHub Actions lors de la création d'un tag:
+### Creating a Release
+Releases are automatic via GitHub Actions when creating a tag:
 
 ```bash
 git tag v2.1.0
 git push origin v2.1.0
 ```
 
-## 🆘 Aide et Support
+## 🆘 Help and Support
 
-### Où Obtenir de l'Aide
-- 💬 [Discussions GitHub](../../discussions) - Questions générales
-- 🐛 [Issues](../../issues) - Bugs et problèmes
-- 📧 Email - Pour les questions sensibles
+### Where to Get Help
+- 💬 [GitHub Discussions](../../discussions) - General questions
+- 🐛 [Issues](../../issues) - Bugs and problems
+- 📧 Email - For sensitive questions
 
-### Communauté
-- Soyez respectueux et constructif
-- Aidez les autres contributeurs
-- Partagez vos idées et expériences
+### Community
+- Be respectful and constructive
+- Help other contributors
+- Share your ideas and experiences
 
-## 📄 Licence
+## 📄 License
 
-En contribuant, vous acceptez que vos contributions soient sous licence MIT, identique au projet principal.
+By contributing, you agree that your contributions will be licensed under the MIT License, same as the main project.
 
 ---
 
-🙏 **Merci de contribuer à l'amélioration de l'Organisateur de Photos !**
+🙏 **Thank you for contributing to Photo Organizer!**

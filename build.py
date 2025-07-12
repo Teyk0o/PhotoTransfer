@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script de build pour créer l'exécutable Windows de l'Organisateur de Photos
+Build script to create the Windows executable for Photo Organizer
 """
 
 import os
@@ -9,118 +9,118 @@ import sys
 from pathlib import Path
 
 def build_executable():
-    """Génère l'exécutable avec PyInstaller"""
+    """Generate executable with PyInstaller"""
     
-    print("🔨 Génération de l'exécutable Organisateur de Photos...")
+    print("🔨 Building Photo Organizer executable...")
     
-    # Vérifier que PyInstaller est installé
+    # Check if PyInstaller is installed
     try:
         import PyInstaller
-        print(f"✅ PyInstaller {PyInstaller.__version__} détecté")
+        print(f"✅ PyInstaller {PyInstaller.__version__} detected")
     except ImportError:
-        print("❌ PyInstaller non trouvé. Installation...")
+        print("❌ PyInstaller not found. Installing...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "pyinstaller"])
     
-    # Configuration PyInstaller
+    # PyInstaller configuration
     main_script = "photo_organizer.py"
     app_name = "PhotoTransfer"
     
-    # Options PyInstaller
+    # PyInstaller options
     pyinstaller_args = [
         "pyinstaller",
-        "--onefile",                    # Un seul fichier exécutable
-        "--windowed",                   # Pas de console (GUI uniquement)
-        f"--name={app_name}",          # Nom de l'exécutable
-        "--clean",                      # Nettoyer le cache
-        "--noconfirm",                 # Pas de confirmation
+        "--onefile",                    # Single executable file
+        "--windowed",                   # No console (GUI only)
+        f"--name={app_name}",          # Executable name
+        "--clean",                      # Clean cache
+        "--noconfirm",                 # No confirmation
         
-        # Métadonnées de l'exécutable
-        "--add-data", "requirements.txt;.",  # Inclure requirements.txt
+        # Executable metadata
+        "--add-data", "requirements.txt;.",  # Include requirements.txt
         
-        # Optimisations
-        "--optimize", "2",              # Optimisation bytecode
-        "--strip",                      # Retirer les symboles debug
+        # Optimizations
+        "--optimize", "2",              # Bytecode optimization
+        "--strip",                      # Remove debug symbols
         
-        # Icône (si disponible)
+        # Icon (if available)
         # "--icon=icon.ico",
         
         main_script
     ]
     
-    # Ajouter des données supplémentaires si nécessaire
+    # Add additional data if necessary
     if os.path.exists("README.md"):
         pyinstaller_args.extend(["--add-data", "README.md;."])
     
     try:
-        # Lancer PyInstaller
-        print("🚀 Lancement de PyInstaller...")
+        # Launch PyInstaller
+        print("🚀 Launching PyInstaller...")
         result = subprocess.run(pyinstaller_args, check=True, capture_output=True, text=True)
         
-        print("✅ Build réussi !")
-        print(f"📦 Exécutable généré: dist/{app_name}.exe")
+        print("✅ Build successful!")
+        print(f"📦 Executable generated: dist/{app_name}.exe")
         
-        # Vérifier que le fichier existe
+        # Check if file exists
         exe_path = Path("dist") / f"{app_name}.exe"
         if exe_path.exists():
             size_mb = exe_path.stat().st_size / (1024 * 1024)
-            print(f"📏 Taille: {size_mb:.1f} MB")
+            print(f"📏 Size: {size_mb:.1f} MB")
         
         return True
         
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur lors du build:")
+        print(f"❌ Build error:")
         print(f"STDOUT: {e.stdout}")
         print(f"STDERR: {e.stderr}")
         return False
 
 def clean_build_files():
-    """Nettoie les fichiers temporaires de build"""
+    """Clean temporary build files"""
     import shutil
     
-    print("🧹 Nettoyage des fichiers temporaires...")
+    print("🧹 Cleaning temporary files...")
     
-    # Dossiers à supprimer
+    # Folders to delete
     dirs_to_clean = ["build", "__pycache__"]
     files_to_clean = ["*.spec"]
     
     for dir_name in dirs_to_clean:
         if os.path.exists(dir_name):
             shutil.rmtree(dir_name)
-            print(f"🗑️ Supprimé: {dir_name}/")
+            print(f"🗑️ Deleted: {dir_name}/")
     
-    # Supprimer les fichiers .spec
+    # Delete .spec files
     for spec_file in Path(".").glob("*.spec"):
         spec_file.unlink()
-        print(f"🗑️ Supprimé: {spec_file}")
+        print(f"🗑️ Deleted: {spec_file}")
 
 def main():
-    """Fonction principale"""
-    print("📸 Organisateur de Photos - Script de Build")
+    """Main function"""
+    print("📸 Photo Organizer - Build Script")
     print("=" * 50)
     
-    # Vérifier que le script principal existe
+    # Check if main script exists
     if not os.path.exists("photo_organizer.py"):
-        print("❌ Fichier photo_organizer.py non trouvé!")
+        print("❌ File photo_organizer.py not found!")
         return 1
     
-    # Installer les dépendances si nécessaire
+    # Install dependencies if necessary
     if os.path.exists("requirements.txt"):
-        print("📦 Installation des dépendances...")
+        print("📦 Installing dependencies...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
     
-    # Générer l'exécutable
+    # Generate executable
     success = build_executable()
     
     if success:
-        print("\n🎉 Build terminé avec succès !")
-        print("💡 Conseil: Testez l'exécutable avant de le distribuer")
+        print("\n🎉 Build completed successfully!")
+        print("💡 Tip: Test the executable before distributing")
         
-        # Nettoyer les fichiers temporaires
+        # Clean temporary files
         clean_build_files()
         
         return 0
     else:
-        print("\n❌ Échec du build")
+        print("\n❌ Build failed")
         return 1
 
 if __name__ == "__main__":
